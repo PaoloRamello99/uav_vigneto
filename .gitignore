@@ -14,9 +14,6 @@ __pycache__/
 .vscode/
 .idea/
 
-# Devcontainer
-.devcontainer/
-
 # Swap files
 *.swp
 *.swo
