@@ -3,14 +3,20 @@ build/
 install/
 log/
 
-# Python
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.so
 
-# VSCode
+# VSCode & IDEs
 .vscode/
+.idea/
 
-# Devcontainer (se in futuro lo aggiungi)
+# Devcontainer
 .devcontainer/
+
+# Swap files
+*.swp
+*.swo
