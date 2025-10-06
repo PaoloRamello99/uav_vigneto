@@ -24,9 +24,9 @@ setup(
             'monitor = uav_vigneto_pkg.monitor:main',
             'refill = uav_vigneto_pkg.refill:main',
             'sprayer = uav_vigneto_pkg.sprayer:main',
-            'map_node = uav_vigneto_pkg.map_node:main',
+            'map = uav_vigneto_pkg.map:main',
             'mission_control = uav_vigneto_pkg.mission_control:main',
-            'dashboard_node = uav_vigneto_pkg.dashboard_node:main',
+            'dashboard = uav_vigneto_pkg.dashboard:main',
         ],
     },
 )
