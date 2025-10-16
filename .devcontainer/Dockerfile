@@ -1,37 +1,36 @@
 FROM althack/ros2:jazzy-full
 
-WORKDIR /workspaces
+WORKDIR /workspaces/uav_vigneto
 
+# Pacchetti base
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    cmake \
-    build-essential \
-    wget \
-    python3-tk \
-    python3-setuptools \
-    ros-jazzy-plotjuggler-ros \
-    ros-jazzy-ros-gz \
-    ros-jazzy-ros-gz-bridge \
-    ffmpeg \
-    tree \
-    sudo \
-    && rm -rf /var/lib/apt/lists/*
+    git cmake build-essential wget python3-tk python3-setuptools \
+    ros-jazzy-plotjuggler-ros ros-jazzy-ros-gz ros-jazzy-ros-gz-bridge \
+    ffmpeg tree sudo && \
+    rm -rf /var/lib/apt/lists/*
 
+# Fix pip
 RUN python3 -m pip config set global.break-system-packages true
 
-RUN git clone https://github.com/PX4/PX4-Autopilot.git --branch=main --recursive
-RUN bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+# PX4 + DDS Agent
+RUN git clone --recursive https://github.com/PX4/PX4-Autopilot.git /opt/PX4-Autopilot && \
+    cd /opt/PX4-Autopilot && bash Tools/setup/ubuntu.sh --no-sim-tools && \
+    git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git /opt/Micro-XRCE-DDS-Agent && \
+    cd /opt/Micro-XRCE-DDS-Agent && mkdir build && cd build && cmake .. && make -j$(nproc) && make install && ldconfig
 
-RUN git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git && \
-    cd Micro-XRCE-DDS-Agent && mkdir build && cd build && \
-    cmake .. && make && make install && ldconfig && \
-    cd /workspaces && rm -rf Micro-XRCE-DDS-Agent
-
-RUN chown -R ros:ros /workspaces
+# Aggiungi utente non-root
+ARG USERNAME=ros
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+RUN groupadd --gid $USER_GID $USERNAME && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    chown -R $USERNAME:$USERNAME /workspaces
 
 USER ros
 
-RUN echo "\nsource /opt/ros/jazzy/setup.bash" >> /home/ros/.bashrc && \
-    echo "if [ -f /workspaces/ros2_px4_template/install/setup.bash ]; then source /workspaces/ros2_px4_template/install/setup.bash; fi" >> /home/ros/.bashrc
+# ROS2 sourcing
+RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/ros/.bashrc
 
-CMD ["/bin/bash"]
+COPY --chown=ros:ros .devcontainer/ros_entrypoint.sh /ros_entrypoint.sh
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]
