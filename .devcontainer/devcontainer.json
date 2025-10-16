@@ -1,15 +1,15 @@
 {
-  "name": "ROS2 PX4 Development Environment",
+  "name": "uav vigneto Development Environment",
   "build": {
     "dockerfile": "Dockerfile",
     "context": ".."
   },
   "workspaceFolder": "/workspaces/uav_vigneto",
-  "remoteUser": "ros",
+  "remoteUser": "paolo",
   "runArgs": [
     "--net=host",
     "--privileged",
-    "--name=ros2_px4_dev",
+    "--name=uav_vigneto_dev",
     "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
     "--env=DISPLAY=${localEnv:DISPLAY}",
     "--env=QT_X11_NO_MITSHM=1",

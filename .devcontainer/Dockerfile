@@ -18,19 +18,22 @@ RUN git clone --recursive https://github.com/PX4/PX4-Autopilot.git /opt/PX4-Auto
     git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git /opt/Micro-XRCE-DDS-Agent && \
     cd /opt/Micro-XRCE-DDS-Agent && mkdir build && cd build && cmake .. && make -j$(nproc) && make install && ldconfig
 
-# Aggiungi utente non-root
-ARG USERNAME=ros
+# Crea utente personalizzato 'paolo'
+ARG USERNAME=paolo
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-RUN groupadd --gid $USER_GID $USERNAME && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
+RUN groupadd --gid $USER_GID $USERNAME && \
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
     echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     chown -R $USERNAME:$USERNAME /workspaces
 
-USER ros
+# Passa all’utente paolo
+USER paolo
 
-# ROS2 sourcing
-RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/ros/.bashrc
+# ROS2 sourcing automatico
+RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/paolo/.bashrc
 
-COPY --chown=ros:ros .devcontainer/ros_entrypoint.sh /ros_entrypoint.sh
+# Entry point
+COPY --chown=paolo:paolo .devcontainer/ros_entrypoint.sh /ros_entrypoint.sh
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
