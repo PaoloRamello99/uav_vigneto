@@ -5,7 +5,7 @@
     "context": ".."
   },
   "workspaceFolder": "/workspaces/uav_vigneto",
-  "remoteUser": "paolo",
+  "remoteUser": "ros",
   "runArgs": [
     "--net=host",
     "--privileged",
@@ -28,14 +28,24 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "althack.ament-task-provider",
+        "betwo.b2-catkin-tools",
+        "DotJoshJohnson.xml",
+        "ms-azuretools.vscode-docker",
         "ms-python.python",
         "ms-vscode.cpptools",
-        "ms-azuretools.vscode-docker",
         "redhat.vscode-yaml",
         "smilerobotics.urdf",
         "twxs.cmake",
         "ms-vscode.cmake-tools",
-        "althack.ament-task-provider"
+        "ms-vscode.makefile-tools",
+        "yzhang.markdown-all-in-one",
+        "zachflower.uncrustify",
+        "charliermarsh.ruff",
+        "hyperoot.settings-organizer",
+        "Gruntfuggly.todo-tree",
+        "johnpapa.vscode-peacock",
+        "Ranch-Hand-Robotics.rde-ros-2"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash",
