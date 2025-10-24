@@ -21,6 +21,7 @@ RUN python3 -m pip config set global.break-system-packages true
 
 RUN git clone https://github.com/PX4/PX4-Autopilot.git --branch=main --recursive
 RUN bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+RUN git clone https://github.com/PX4/px4_msgs.git
 
 RUN git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git && \
     cd Micro-XRCE-DDS-Agent && mkdir build && cd build && \
