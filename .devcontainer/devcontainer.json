@@ -4,12 +4,12 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
-  "workspaceFolder": "/workspaces/uav_vineyard",
+  "workspaceFolder": "/workspaces/uav_vigneto",
   "remoteUser": "ros",
   "runArgs": [
     "--net=host",
     "--privileged",
-    "--name=uav_vineyard_dev",
+    "--name=uav_vigneto_dev",
     "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
     "--env=DISPLAY=${localEnv:DISPLAY}",
     "--env=QT_X11_NO_MITSHM=1",
